@@ -3,6 +3,8 @@ package com.example.blackbox;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -16,15 +18,22 @@ import java.util.ArrayList;
 
 public class AddAcc extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    // user input
+    private boolean validate;
     EditText edt_txt_pass, edt_txt_acc, edt_txt_title;
-    TextInputLayout text_input_layout_title;
-    int img_index;
+    TextInputLayout input_layout_title, input_layout_acc, input_layout_pass;
     String title;
+    // img index for icons
+    int img_index;
+
+    // button
     Button btn_save;
 
+    // dropdown spinner
     Spinner spin_category;
     ArrayList<SpinModel> spinList;
 
+    //
     private final String mail = "E-Mail";
     private final String other = "Other";
     private final String debit_card = "Debit Card";
@@ -40,7 +49,12 @@ public class AddAcc extends AppCompatActivity implements AdapterView.OnItemSelec
         edt_txt_acc = findViewById(R.id.edt_txt_acc);
         edt_txt_pass = findViewById(R.id.edt_txt_pass);
         edt_txt_title = findViewById(R.id.edt_txt_title);
+        input_layout_acc = findViewById(R.id.input_layout_acc);
+        input_layout_pass = findViewById(R.id.input_layout_pass);
+        input_layout_title = findViewById(R.id.input_layout_title);
 
+
+        // save into database
         btn_save = findViewById(R.id.btn_save);
 
         btn_save.setOnClickListener(new View.OnClickListener() {
@@ -69,20 +83,63 @@ public class AddAcc extends AppCompatActivity implements AdapterView.OnItemSelec
             spin_category.setAdapter(spinAdapter);
             spin_category.setOnItemSelectedListener(this);
         }
+
+        edt_txt_acc.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(edt_txt_acc.getText().length() >= 1)
+                    input_layout_acc.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(edt_txt_acc.getText().length() >= 1)
+                    input_layout_acc.setError(null);
+                else
+                    input_layout_acc.setError("Enter Your Account Name");
+            }
+        });
+
+        edt_txt_pass.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if(edt_txt_pass.getText().length() >= 1)
+                    input_layout_pass.setError(null);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if(edt_txt_pass.getText().length() >= 1)
+                    input_layout_pass.setError(null);
+                else
+                    input_layout_pass.setError("Enter Your Password");
+            }
+        });
     }
 
     // if empty error
     private boolean validateFields() {
-        int yourDesiredLength = 5;
-        if (edt_txt_pass.getText().length() < yourDesiredLength) {
-            edt_txt_pass.setError("Your Input is Invalid");
-            return false;
-        } else if (edt_txt_acc.getText().length() < yourDesiredLength) {
-            edt_txt_acc.setError("Your Input is Invalid");
-            return false;
-        } else {
-            return true;
+        int yourDesiredLength = 1;
+        if(edt_txt_pass.getText().length() < yourDesiredLength || edt_txt_acc.getText().length() < yourDesiredLength)
+            validate = false;
+        else
+            validate = true;
+        if (edt_txt_acc.getText().length() < yourDesiredLength) {
+            input_layout_acc.setError("Enter Your Account Name");
         }
+        if (edt_txt_pass.getText().length() < yourDesiredLength) {
+            input_layout_pass.setError("Enter Your Password");
+        }
+        return validate;
     }
 
     private ArrayList<SpinModel> getSpinList() {

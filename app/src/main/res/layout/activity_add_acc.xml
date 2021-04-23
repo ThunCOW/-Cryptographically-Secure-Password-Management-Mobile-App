@@ -63,60 +63,61 @@
             android:layout_height="wrap_content">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/white"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginTop="20dp"
-                android:ems="10"
-                android:id="@+id/text_input_layout_title">
-            <EditText
-                android:id="@+id/edt_txt_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Title"
-                android:inputType="textPersonName" />
+                android:ems="10">
+                <EditText
+                    android:id="@+id/edt_txt_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Title"
+                    android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_acc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/white"
-                android:layout_below="@id/text_input_layout_title"
+                app:errorEnabled="true"
+                android:layout_below="@id/input_layout_title"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
-                android:layout_marginTop="30dp"
-                android:ems="10"
-                android:id="@+id/text_input_layout_acc">
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edt_txt_acc"
-                android:hint="Account"
-                android:inputType="textPersonName" />
+                android:layout_marginTop="15dp"
+                android:ems="10">
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/edt_txt_acc"
+                    android:hint="Account"
+                    android:inputType="textPersonName" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/input_layout_pass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/white"
                 app:passwordToggleEnabled="true"
+                app:errorEnabled="true"
                 app:passwordToggleTint="#4F8BBA"
-                android:layout_below="@id/text_input_layout_acc"
+                android:layout_below="@id/input_layout_acc"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginBottom="12dp"
                 android:ems="10">
-
                 <EditText
                     android:id="@+id/edt_txt_pass"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Password"
                     android:inputType="textPassword" />
-
             </com.google.android.material.textfield.TextInputLayout>
 
 

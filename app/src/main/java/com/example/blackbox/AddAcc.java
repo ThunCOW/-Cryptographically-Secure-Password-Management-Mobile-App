@@ -61,16 +61,26 @@ public class AddAcc extends AppCompatActivity implements AdapterView.OnItemSelec
             @Override
             public void onClick(View view) {
                 if (validateFields()) {
-                    DataBaseHelper db = new DataBaseHelper(AddAcc.this);
+                    try {
+                        DataBaseHelper db = new DataBaseHelper(AddAcc.this);
 
-                    CardModel cardModel = new CardModel();
-                    cardModel.setAcc(edt_txt_acc.getText().toString());
-                    cardModel.setPass(edt_txt_pass.getText().toString());
-                    cardModel.setImg(img_index);
-                    if(img_index == 4)
-                        title = edt_txt_title.getText().toString();
-                    cardModel.setTitle(title);
-                    db.addAcc(cardModel);
+                        CardModel cardModel = new CardModel();
+                        cardModel.setAcc(edt_txt_acc.getText().toString());
+                        //cardModel.setPass(edt_txt_pass.getText().toString());
+
+                        AES aes = new AES();
+                        //Toast.makeText(getApplicationContext(), "encrypted = "+aes.encrypt(edt_txt_pass.getText(), Toast.LENGTH_SHORT).show();
+                        cardModel.setPass(aes.encrypt(edt_txt_pass.getText().toString()));
+
+                        cardModel.setImg(img_index);
+                        if(img_index == 4)
+                            title = edt_txt_title.getText().toString();
+                        cardModel.setTitle(title);
+                        db.addAcc(cardModel);
+                    } catch (Exception e) {
+                        Toast.makeText(view.getContext(), "ENCRYPTE FAILURE", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
                 }
             }
         });

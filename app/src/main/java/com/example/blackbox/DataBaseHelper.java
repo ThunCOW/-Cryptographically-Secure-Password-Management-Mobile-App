@@ -60,8 +60,31 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "DB ERROR", Toast.LENGTH_SHORT).show();
     }
 
+    public String getPassword(int id){
+        // get one data
+        //("select * from " + BanksTable.NAME + " where " + BanksTable.COL_NAME + "='" + bankName + "'" , null);
+        String queryString = "SELECT * FROM " + MAIL_TABLE + " WHERE " + COLUMN_MAIL_ID + "='" + id +"'";
+        //String queryString = "SELECT * FROM " + MAIL_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(queryString, null);
+        String encrypted = "CURSOR FAILED";
+        if(cursor != null){
+            if(cursor.moveToFirst()){
+                do {
+                    encrypted = cursor.getString(2);
+                }while (cursor.moveToNext());
+            }
+        }else{
+            // db empty dont do anything
+        }
+        cursor.close();
+        db.close();
+        return encrypted;
+    }
+
     public ArrayList<CardModel> getAllCards(){
-        // get data from database
+        // get all data from database
 
         String queryString = "SELECT * FROM " + MAIL_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -79,6 +102,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 String cardTitle = cursor.getString(4);
 
                 CardModel cardModel = new CardModel();
+                cardModel.setId(cardID);
                 cardModel.setAcc(cardAccount);
                 cardModel.setPass(cardPassword);
                 cardModel.setImg(cardImage);

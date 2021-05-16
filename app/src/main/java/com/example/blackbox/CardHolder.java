@@ -13,6 +13,12 @@ public class CardHolder extends RecyclerView.ViewHolder{
     ImageView img;
     TextView acc, pass, txt_Copy, title, txt_View;
 
+    int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public CardHolder(@NonNull View itemView) {
         super(itemView);
 

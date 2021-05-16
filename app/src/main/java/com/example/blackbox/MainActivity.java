@@ -93,13 +93,28 @@ public class MainActivity extends AppCompatActivity {
 
         ArrayList<CardModel> cards = new ArrayList<>();
 
-        CardModel cardModel = new CardModel();
-
         ArrayList<CardModel> newCards = db.getAllCards();
         for(CardModel item : newCards){
-            cardModel = new CardModel();
+            CardModel cardModel = new CardModel();
+            //char l = item.getPass().charAt(item.getAcc().length());
+
+            //db
+            DataBaseHelper db = new DataBaseHelper(getApplicationContext());
+            //Toast.makeText(getApplicationContext(), "encPASS = "+ db.getPassword(item.getAcc()), Toast.LENGTH_SHORT).show();
+            //decryption
+            String decrypted = "";
+            try {
+                AES aes = new AES();
+                decrypted = aes.decrypt(db.getPassword(item.getId()));
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "getCards() DECRYPT FAILURE", Toast.LENGTH_SHORT).show();
+                e.printStackTrace();
+            }
+
+            cardModel.setId(item.getId());
             cardModel.setAcc(item.getAcc());
-            cardModel.setPass(item.getPass());
+            String str = decrypted.replaceAll(".", "*");
+            cardModel.setPass(str);
             cardModel.setTitle(item.getTitle());
             switch (item.getImg()) {
                 case 0:

@@ -36,6 +36,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder>{
     @Override
     public void onBindViewHolder(@NonNull CardHolder holder, int position) {
 
+        holder.setId(cards.get(position).getId());
         holder.acc.setText(cards.get(position).getAcc());
         holder.pass.setText(cards.get(position).getPass());
         holder.title.setText(cards.get(position).getTitle());
@@ -44,17 +45,25 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder>{
             @Override
             public void onClick(View view) {
                 ClipboardManager clipboard = (ClipboardManager) view.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clip = ClipData.newPlainText("txtCopy", cards.get(position).getAcc());
+                ClipData clip = ClipData.newPlainText("txtCopy", cards.get(position).getPass());
                 clipboard.setPrimaryClip(clip);
 
-                Toast.makeText(view.getContext(), "copied?", Toast.LENGTH_SHORT).show();
+                Toast.makeText(view.getContext(), "copied", Toast.LENGTH_SHORT).show();
             }
         });
         holder.txt_View.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                DataBaseHelper db = new DataBaseHelper(view.getContext());
                 //decryption
-                holder.pass.setText("decrpted");
+                try {
+                    Toast.makeText(view.getContext(), "id = "+cards.get(position).getId(), Toast.LENGTH_SHORT).show();
+                    AES aes = new AES();
+                    holder.pass.setText(aes.decrypt(db.getPassword(cards.get(position).getId())));
+                } catch (Exception e) {
+                    Toast.makeText(view.getContext(), "DECRYPT FAILURE", Toast.LENGTH_SHORT).show();
+                    e.printStackTrace();
+                }
             }
         });
     }

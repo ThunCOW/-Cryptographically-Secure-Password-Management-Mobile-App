@@ -3,6 +3,7 @@ package com.example.blackbox;
 public class CardModel {
 
     private int img;
+    private int id;
     private String acc, pass, title;
 
     public int getImg() {
@@ -11,6 +12,14 @@ public class CardModel {
 
     public void setImg(int img) {
         this.img = img;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getAcc() {

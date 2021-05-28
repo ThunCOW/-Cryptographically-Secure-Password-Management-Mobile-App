@@ -1,10 +1,30 @@
 package com.example.blackbox;
 
-public class CardModel {
+import java.util.Comparator;
+
+import javax.crypto.spec.IvParameterSpec;
+
+public class CardModel{
 
     private int img;
-    private int id;
-    private String acc, pass, title;
+    private int id, order;
+    private String acc, pass, title, salt, iv;
+
+    public String getSalt() {
+        return salt;
+    }
+
+    public void setSalt(String salt) {
+        this.salt = salt;
+    }
+
+    public String getIv() {
+        return iv;
+    }
+
+    public void setIv(String iv) {
+        this.iv = iv;
+    }
 
     public int getImg() {
         return img;
@@ -20,6 +40,14 @@ public class CardModel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     public String getAcc() {
@@ -45,4 +73,14 @@ public class CardModel {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public static Comparator<CardModel> byOrder = new Comparator<CardModel>() {
+        @Override
+        public int compare(CardModel m1, CardModel m2) {
+            //m1.getAcc().compareTo(m2.getAcc());
+            // descending order
+            return m1.getOrder() > m2.getOrder() ? 1 : m1.getOrder() < m2.getOrder()  ? -1 : 0;
+        }
+    };
+
 }

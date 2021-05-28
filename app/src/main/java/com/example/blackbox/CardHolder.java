@@ -6,6 +6,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CardHolder extends RecyclerView.ViewHolder{
@@ -13,11 +14,7 @@ public class CardHolder extends RecyclerView.ViewHolder{
     ImageView img;
     TextView acc, pass, txt_Copy, title, txt_View;
 
-    int id;
-
-    public void setId(int id) {
-        this.id = id;
-    }
+    CardView cardView;
 
     public CardHolder(@NonNull View itemView) {
         super(itemView);
@@ -28,6 +25,6 @@ public class CardHolder extends RecyclerView.ViewHolder{
         this.txt_Copy = itemView.findViewById(R.id.txt_Copy);
         this.txt_View = itemView.findViewById(R.id.txt_view);
         this.title = itemView.findViewById(R.id.category_title);
-        //this.rowLayout = itemView.findViewById(R.id.rowLayout);
+        this.cardView = itemView.findViewById(R.id.rowLayout);
     }
 }

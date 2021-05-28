@@ -10,8 +10,8 @@
         android:id="@+id/cardLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         app:cardCornerRadius="8dp"
         app:cardUseCompatPadding="true"
@@ -120,9 +120,51 @@
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
-
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
+
+    <TableRow
+        android:id="@+id/tableRow_checkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="2dp"
+        android:text="Generate Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/cardLayout"
+        app:layout_constraintTop_toBottomOf="@+id/cardLayout" >
+
+        <CheckBox
+            android:id="@+id/checkBox_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Numbers" />
+
+        <CheckBox
+            android:id="@+id/checkBox_uppercase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Uppercase" />
+
+        <CheckBox
+            android:id="@+id/checkBox_punctuation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Symbols" />
+    </TableRow>
+
+    <Button
+        android:id="@+id/btn_generatePass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="1dp"
+        android:text="Generate Password"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tableRow_checkbox"
+        app:layout_constraintTop_toBottomOf="@+id/tableRow_checkbox" />
 
     <Button
         android:id="@+id/btn_save"
@@ -130,10 +172,10 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="1dp"
         android:text="Save"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/cardLayout"
-        app:layout_constraintTop_toBottomOf="@+id/cardLayout" />
+        app:layout_constraintStart_toStartOf="@+id/btn_generatePass"
+        app:layout_constraintTop_toBottomOf="@+id/btn_generatePass" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout >

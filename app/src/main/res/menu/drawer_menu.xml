@@ -21,15 +21,21 @@
             android:layout_width="64dp"
             android:layout_height="48dp"/>
         <item
-            android:id="@+id/nav_device"
+            android:id="@+id/nav_credit_card"
             android:title="Credit Cards"
             android:icon="@drawable/debit_card_24dpi"
             android:layout_width="64dp"
             android:layout_height="48dp"/>
         <item
-            android:id="@+id/nav_credit_card"
+            android:id="@+id/nav_computer"
             android:title="Computer"
             android:icon="@drawable/computer_24dpi"
+            android:layout_width="64dp"
+            android:layout_height="48dp"/>
+        <item
+            android:id="@+id/nav_phone"
+            android:title="Phone"
+            android:icon="@drawable/phone_24dpi"
             android:layout_width="64dp"
             android:layout_height="48dp"/>
         <item

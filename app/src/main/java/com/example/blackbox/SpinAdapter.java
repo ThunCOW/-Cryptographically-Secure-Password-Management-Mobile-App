@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class SpinAdapter extends ArrayAdapter<SpinModel> {
     public SpinAdapter(@NonNull Context context, ArrayList<SpinModel> spinList) {

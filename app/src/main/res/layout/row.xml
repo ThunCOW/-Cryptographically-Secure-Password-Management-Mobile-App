@@ -36,6 +36,28 @@
             android:src="@drawable/e_mail" />
 
         <TextView
+            android:id="@+id/txt_Hid_Acc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/img_Card"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_toRightOf="@+id/img_Card"
+            android:hint="Account Name"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/txt_Hid_Pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/img_Card"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toRightOf="@+id/img_Card"
+            android:hint="Password"
+            android:textSize="20sp" />
+
+        <TextView
             android:id="@+id/txt_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,28 +85,6 @@
             android:textColor="#2C731C"
             android:textSize="20sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/txt_Hid_Acc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/img_Card"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="15dp"
-            android:layout_toRightOf="@+id/img_Card"
-            android:text="Acc"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/txt_Hid_Pass"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/img_Card"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="15dp"
-            android:layout_toRightOf="@+id/img_Card"
-            android:text="Pass"
-            android:textSize="20sp" />
 
     </RelativeLayout>
 

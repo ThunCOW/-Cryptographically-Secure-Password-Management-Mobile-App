@@ -24,67 +24,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class AES {
 
-    //private static final String masterKey = "baeldung";
-    //private static SecretKey key;
-    //private static IvParameterSpec ivParameterSpec;
-
-    /*private String secretKey = "this_is_secret_key_1";
-
-
-                        //(String data, String secretKey)
-    public String encrypt(String d) throws Exception{
-        SecretKeySpec key = generateKey(secretKey);
-        Cipher c = Cipher.getInstance("AES");
-        c.init(Cipher.ENCRYPT_MODE, key);
-        byte[] encVal = c.doFinal(d.getBytes());
-        String encryptedValue = Base64.encodeToString(encVal, Base64.DEFAULT);
-        return encryptedValue;//encrypted plain text
-    }*/
-
-    public SecretKeySpec generateKey(String secretKey) throws Exception {
-        final MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] bytes = secretKey.getBytes("UTF-8");
-        digest.update(bytes, 0, bytes.length);
-        byte[] key = digest.digest();
-        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-        return secretKeySpec;
-        
-        /*SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA256");
-        KeySpec spec = new PBEKeySpec(password.toCharArray(), salt.getBytes(), 65536, 256);*/
-        //SecretKey secret = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
-    }
-                        //(String encryptedText, String secretKey)
-    /*public String decrypt(String encryptedText) throws Exception{
-        SecretKeySpec key = generateKey(secretKey);
-        Cipher c = Cipher.getInstance("AES");
-        c.init(Cipher.DECRYPT_MODE, key);
-        byte[] decodedValue = Base64.decode(encryptedText, Base64.DEFAULT);
-        byte[] decVal = c.doFinal(decodedValue);
-        String decryptedValue = new String(decVal);
-        return decryptedValue;
-    }*/
-
-    /////////////////
-    /*private String secretKey = "this_is_secret_key_1";
-    private SecretKeySpec generateKey(String secretKey) throws Exception {
-        final MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] bytes = secretKey.getBytes("UTF-8");
-        digest.update(bytes, 0, bytes.length);
-        byte[] key = digest.digest();
-        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
-        return secretKeySpec;
-    }
-
-    public String decrypt(String encryptedText) throws Exception{
-        SecretKeySpec key = generateKey(secretKey);
-        Cipher c = Cipher.getInstance("AES");
-        c.init(Cipher.DECRYPT_MODE, key);
-        byte[] decodedValue = Base64.decode(encryptedText, Base64.DEFAULT);
-        byte[] decVal = c.doFinal(decodedValue);
-        String decryptedValue = new String(decVal);
-        return decryptedValue;
-    }*/
-
     public static String encrypt(String plainText, SecretKey key, String iv)
             throws NoSuchPaddingException, NoSuchAlgorithmException,
             InvalidAlgorithmParameterException, InvalidKeyException,
@@ -97,7 +36,6 @@ public class AES {
         byte[] cipherText = cipher.doFinal(plainText.getBytes());
         String encryptedValue = Base64.encodeToString(cipherText, Base64.DEFAULT);
         return encryptedValue;
-        //return Base64.getEncoder().encodeToString(cipherText);
     }
 
     public static String decrypt(String cipherText, SecretKey key, String iv)
@@ -125,7 +63,6 @@ public class AES {
             throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         SecretKeyFactory secretKeyfactory = SecretKeyFactory.getInstance("PBKDF2withHmacSHA1"); //PBKDF2withHmacSHA1  vs   PBKDF2WithHmacSHA256(NOT SUPPORTED)
-        //ToDo: iterationCount changed from 65536 to what it is now
         KeySpec spec = new PBEKeySpec(masterKey.toCharArray(), salt, 1000, 256);
         byte[] secret = secretKeyfactory.generateSecret(spec).getEncoded();
         return secret;
@@ -135,7 +72,6 @@ public class AES {
             throws NoSuchAlgorithmException, InvalidKeySpecException {
 
         SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2withHmacSHA1");
-        //ToDo: iterationCount changed from 65536 to what it is now
         KeySpec spec = new PBEKeySpec(masterKey.toCharArray(), salt.getBytes(StandardCharsets.UTF_8), 1000, 256);
         SecretKey secret = new SecretKeySpec(factory.generateSecret(spec).getEncoded(), "AES");
         return secret;
@@ -159,16 +95,34 @@ public class AES {
         return salt;
     }
 
+    /*private String secretKey = "this_is_secret_key_1";
 
-    /*void givenString_whenEncrypt_thenSuccess()
-            throws NoSuchAlgorithmException, IllegalBlockSizeException, InvalidKeyException,
-            BadPaddingException, InvalidAlgorithmParameterException, NoSuchPaddingException {
+    //(String data, String secretKey)
+    public String encrypt(String d) throws Exception{
+        SecretKeySpec key = generateKey();
+        Cipher c = Cipher.getInstance("AES");
+        c.init(Cipher.ENCRYPT_MODE, key);
+        byte[] encVal = c.doFinal(d.getBytes());
+        String encryptedValue = Base64.encodeToString(encVal, Base64.DEFAULT);
+        return encryptedValue;//encrypted plain text
+    }
+    //(String encryptedText, String secretKey)
+    public String decrypt(String encryptedText) throws Exception{
+        SecretKeySpec key = generateKey();
+        Cipher c = Cipher.getInstance("AES");
+        c.init(Cipher.DECRYPT_MODE, key);
+        byte[] decodedValue = Base64.decode(encryptedText, Base64.DEFAULT);
+        byte[] decVal = c.doFinal(decodedValue);
+        String decryptedValue = new String(decVal);
+        return decryptedValue;
+    }
 
-        String input = "baeldung";
-        SecretKey key = generateKey(128);
-        IvParameterSpec ivParameterSpec = generateIv();
-        String algorithm = "AES/CBC/PKCS5Padding";
-        String cipherText = encrypt(algorithm, input, key, ivParameterSpec);
-        String plainText = decrypt(algorithm, cipherText, key, ivParameterSpec);
+    public SecretKeySpec generateKey() throws Exception {
+        final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] bytes = secretKey.getBytes("UTF-8");
+        digest.update(bytes, 0, bytes.length);
+        byte[] key = digest.digest();
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, "AES");
+        return secretKeySpec;
     }*/
 }

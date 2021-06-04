@@ -4,42 +4,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SortedList;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Switch;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewSwitcher;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import javax.crypto.SecretKey;
 
@@ -77,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         edt_txt_master_key = findViewById(R.id.edt_txt_master_key);
 
+        // C:\Program Files\Android\Android Studio\plugins\android\resources\images\asset_studio\ic_launcher_foreground.xml
         btn_toMainActivity = findViewById(R.id.btn_toMainActivity);
         btn_toMainActivity.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Recent");
         toolbar.setTitleTextColor(Color.WHITE);
-        //toolbar.setNavigationIcon(R.drawable.ic_baseline_menu_24);
         toolbar.getNavigationIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
         setSupportActionBar(toolbar);
 
@@ -275,6 +260,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             cardModel.setPass(str);
             cardModel.setTitle(item.getTitle());
             cardModel.setOrder(item.getOrder());
+            cardModel.setSalt(item.getSalt());
+            cardModel.setIv(item.getIv());
             switch (item.getImg()) {
                 case 0:
                     cardModel.setImg(R.drawable.e_mail);
@@ -311,6 +298,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
     }
 
+    // remove by swipe
     ItemTouchHelper.SimpleCallback simpleCallback = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
@@ -320,7 +308,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
             int position = viewHolder.getAdapterPosition();
-            Toast.makeText(getApplicationContext(), "pos = "+position, Toast.LENGTH_SHORT).show();
             db.deleteAcc(cardAdapter.cards.get(position));
             cardAdapter.deleteItem(position);
             cardAdapter.notifyItemRemoved(position);
@@ -351,6 +338,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         cardAdapter.notifyDataSetChanged();
 
         // first time adding accounts
+        //ToDo: not properly working, master wrong but still can delete
         if(itemTouchHelper == null) {
             itemTouchHelper = new ItemTouchHelper(simpleCallback);
             itemTouchHelper.attachToRecyclerView(recyclerView);

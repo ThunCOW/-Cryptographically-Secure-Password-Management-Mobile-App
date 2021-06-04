@@ -86,22 +86,11 @@ public class AddAcc extends AppCompatActivity implements AdapterView.OnItemSelec
 
                         AES aes = new AES();
 
-
-                        /*//create secret key from master key and random generated salt
-                        String salt = aes.generateSalt();
-                        //SecretKey key = aes.getKeyFromPassword("baeldung",salt);  //salt and masterkey
-                        //SecretKey key = aes.generateKeyBySize(256);   //by size
-                        SecretKey key = aes.generateKey(salt); //the original,
-                        //Toast.makeText(getApplicationContext(), "salt = "+salt, Toast.LENGTH_SHORT).show();
-
-                        //generate initialization vector
-                        IvParameterSpec ivParameterSpec = aes.generateIv();*/
-
                         //create secret key from master key and random generated salt
                         String salt = aes.generateSalt();
                         String masterKey = getIntent().getStringExtra("masterKey");
                         SecretKey key = aes.getKeyFromPassword(masterKey, salt);  //salt and masterkey to generate secretKey
-                        //SecretKey key = aes.generateKey(salt);
+                        //SecretKey key = aes.generateKeyBySize(256);   //by size
                         //generate initialization vector
                         String iv = aes.generateIv();
                         cardModel.setSalt(salt);
@@ -227,7 +216,7 @@ public class AddAcc extends AppCompatActivity implements AdapterView.OnItemSelec
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         SpinModel item = (SpinModel) adapterView.getSelectedItem();
         getIndex(item.getCategory());
-        Toast.makeText(this, item.getCategory(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, item.getCategory(), Toast.LENGTH_SHORT).show();
         if(img_index == 4) {
             edt_txt_title.setEnabled(true);
             //text_input_layout_title.setFocusable(true);

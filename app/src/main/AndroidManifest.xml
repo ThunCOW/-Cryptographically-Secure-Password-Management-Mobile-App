@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BlackBox">
         <activity
+            android:name=".UpdateAcc"
+            android:label="Update Account"
+            android:parentActivityName=".MainActivity"></activity>
+        <activity
             android:name=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -20,9 +24,8 @@
         </activity>
         <activity
             android:name=".AddAcc"
-            android:label="New Password"
-            android:parentActivityName=".MainActivity">
-        </activity>
+            android:label="New Account"
+            android:parentActivityName=".MainActivity"></activity>
     </application>
 
 </manifest>

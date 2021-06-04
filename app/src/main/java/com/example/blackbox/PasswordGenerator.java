@@ -1,15 +1,11 @@
 package com.example.blackbox;
 
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class PasswordGenerator extends AppCompatActivity {
+public class PasswordGenerator {
     private static final String LOWER = "abcdefghijklmnopqrstuvwxyz";
     private static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String DIGITS = "0123456789";
@@ -18,10 +14,6 @@ public class PasswordGenerator extends AppCompatActivity {
     private boolean useUpper;
     private boolean useDigits;
     private boolean usePunctuation;
-
-    private PasswordGenerator() {
-        throw new UnsupportedOperationException("Empty constructor is not supported.");
-    }
 
     private PasswordGenerator(PasswordGeneratorBuilder builder) {
         this.useLower = builder.useLower;

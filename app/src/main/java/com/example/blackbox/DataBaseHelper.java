@@ -9,9 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
-import java.sql.Blob;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -34,12 +32,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        /*String query= "CREATE TABLE " + MAIL_TABLE + " (" +
-                COLUMN_MAIL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_MAIL_ACCOUNT + " TEXT, " +
-                COLUMN_MAIL_PASSWORD + " TEXT, " +
-                COLUMN_IMG_INDEX + " INTEGER, " +
-                COLUMN_TITLE + " TEXT)";*/
 
         String query= "CREATE TABLE " + MAIL_TABLE + " (" +
                 COLUMN_MAIL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -114,53 +106,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         cv.put(COLUMN_MAIL_ACCOUNT, cardModel.getAcc());
         cv.put(COLUMN_MAIL_PASSWORD, cardModel.getPass());  //needs to be encrypted
-        cv.put(COLUMN_IMG_INDEX, cardModel.getImg());
+        //cv.put(COLUMN_IMG_INDEX, cardModel.getImg()); //ToDo:works?
         cv.put(COLUMN_TITLE, cardModel.getTitle());
-        //updateOrder();
+        fixOrder(0);
         cv.put(COLUMN_ORDER, 1);
+        cv.put(COLUMN_SALT, cardModel.getSalt());
+        cv.put(COLUMN_IV, cardModel.getIv());
 
         //Cursor cursor = db.rawQuery()
         long result = db.update(MAIL_TABLE, cv, COLUMN_MAIL_ID+"="+cardModel.getId(), null);
         if(result == -1)
-            Toast.makeText(context, "DB ERROR", Toast.LENGTH_SHORT).show();
-    }
-
-    void updateOrder() {
-        String queryString = "SELECT * FROM " + MAIL_TABLE;
-        SQLiteDatabase db_write = this.getWritableDatabase();
-        SQLiteDatabase db_read = this.getReadableDatabase();
-        Cursor cursor = db_read.rawQuery(queryString, null);
-        if(cursor != null) {
-            if (cursor.moveToFirst()) {
-                do {
-                    String queryString2 = "UPDATE " + MAIL_TABLE + " SET " + COLUMN_ORDER + "='" + (cursor.getInt(5)+1) + "' WHERE " + COLUMN_MAIL_ID + "='" + cursor.getInt(0) + "'";
-                    db_write.execSQL(queryString2);
-                } while (cursor.moveToNext());
-            } else {
-                // db empty dont do anything
-            }
-        }
-
-        cursor.close();
-        // gives error when i close db
-        //db_write.close();
-        //db_read.close();
-
-        //ContentValues cv = new ContentValues();
-
-        //String queryString = "SELECT * FROM " + MAIL_TABLE + " WHERE " + COLUMN_MAIL_ID + "='" + cardModel.getId() +"'";
-
-        /*cv.put(COLUMN_MAIL_ACCOUNT, cardModel.getAcc());
-        cv.put(COLUMN_MAIL_PASSWORD, cardModel.getPass());  //needs to be encrypted
-        cv.put(COLUMN_IMG_INDEX, cardModel.getImg());
-        cv.put(COLUMN_TITLE, cardModel.getTitle());*/
-        //fixOrder();
-        //cv.put(COLUMN_ORDER, 1);
-
-        //Cursor cursor = db.rawQuery()
-        /*long result = db.update(MAIL_TABLE, cv, COLUMN_MAIL_ID+"="+cardModel.getId(), null);
-        if(result == -1)
-            Toast.makeText(context, "DB ERROR", Toast.LENGTH_SHORT).show();*/
+            Toast.makeText(context, "UPDATE ERROR", Toast.LENGTH_SHORT).show();
     }
 
     // increase order in DB, db sorted by Order
@@ -295,75 +251,4 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         db.close();
         return cards;
     }
-
-    /*public static final String CUSTOMER_TABLE = "CUSTOMER_TABLE";
-    public static final String COLUMN_ID = "ID";
-    public static final String COLUMN_CUSTOMER_NAME = "CUSTOMER_NAME";
-    public static final String COLUMN_CUSTOMER_AGE = "CUSTOMER_AGE";
-    public static final String COLUMN_ACTIVE_CUSTOMER = "ACTIVE_CUSTOMER";
-
-    public DataBaseHelper(@Nullable Context context) {
-
-        super(context, "customer.db", null, 1);
-    }
-
-    //first time accessed
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        String createTableStatement= "CREATE TABLE " + CUSTOMER_TABLE + " (" +
-                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLUMN_CUSTOMER_NAME + " TEXT, " +
-                COLUMN_CUSTOMER_AGE + " INT, " +
-                COLUMN_ACTIVE_CUSTOMER + " BOOL )";
-
-        db.execSQL(createTableStatement);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
-    }
-
-    public  boolean addOne(CustomerModel customerModel){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues cv = new ContentValues();
-
-        cv.put(COLUMN_CUSTOMER_NAME, customerModel.getName());
-        cv.put(COLUMN_CUSTOMER_AGE, customerModel.getAge());
-        cv.put(COLUMN_ACTIVE_CUSTOMER, customerModel.getIsActive());
-
-        db.insert(CUSTOMER_TABLE,null, cv);
-        return true;
-    }
-
-    public List<CustomerModel> getAllCustomers(){
-        List<CustomerModel> customers = new ArrayList<>();
-
-        // get data from database
-
-        String queryString = "SELECT * FROM " + CUSTOMER_TABLE;
-
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(queryString, null);
-        if(cursor.moveToFirst())
-        {
-            do {
-                int customerID = cursor.getInt(0);
-                String customerName = cursor.getString(1);
-                int customerAge = cursor.getInt(2);
-                boolean customerActive = cursor.getInt(3) == 1 ? true: false;
-
-                CustomerModel newCustomer = new CustomerModel(customerID, customerName, customerAge, customerActive);
-                customers.add(newCustomer);
-            }while (cursor.moveToNext());
-        }
-        else{
-            // do not add anything
-        }
-
-        cursor.close();
-        db.close();
-        return customers;
-    }*/
 }

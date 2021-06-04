@@ -11,7 +11,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="90dp"
-        android:src="@drawable/nav_img" />
+        android:src="@drawable/title" />
 
 
 </LinearLayout>

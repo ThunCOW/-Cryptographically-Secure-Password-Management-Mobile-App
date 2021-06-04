@@ -1,10 +1,9 @@
 package com.example.blackbox;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-import javax.crypto.spec.IvParameterSpec;
-
-public class CardModel{
+public class CardModel implements Serializable {
 
     private int img;
     private int id, order;

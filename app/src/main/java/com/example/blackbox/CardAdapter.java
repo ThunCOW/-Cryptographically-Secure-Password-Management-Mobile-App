@@ -3,6 +3,9 @@ package com.example.blackbox;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.InputFilter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +44,11 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder>{
     @Override
     public void onBindViewHolder(@NonNull CardHolder holder, int position) {
 
-        holder.acc.setText(cards.get(position).getAcc());
+        if(cards.get(position).getAcc().length() > 13) {
+            holder.acc.setText(cards.get(position).getAcc().substring(0, 13) + "...");
+        }else
+            holder.acc.setText(cards.get(position).getAcc());
+
         holder.pass.setText(cards.get(position).getPass());
         holder.title.setText(cards.get(position).getTitle());
         holder.img.setImageResource(cards.get(position).getImg());
@@ -64,7 +71,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder>{
                         mainActivity.cardAdapter.notifyDataSetChanged();
                     }
                 }
-
             }
         });
 
@@ -83,14 +89,39 @@ public class CardAdapter extends RecyclerView.Adapter<CardHolder>{
                     String decrypted = aes.decrypt(db.getPassword(cards.get(position).getId()), key, iv);
                     holder.pass.setText(decrypted);
                 } catch (Exception e) {
-                    Toast.makeText(view.getContext(), "DECRYPT FAILURE", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(view.getContext(), "DECRYPT FAILURE", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
             }
         });
+
+        holder.acc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InputFilter[] fArray = new InputFilter[1];
+                fArray[0] = new InputFilter.LengthFilter(30);
+                holder.acc.setFilters(fArray);
+                holder.acc.setText(cards.get(position).getAcc());
+            }
+        });
+
+        // hold to update cardView
         holder.cardView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
+                if(cards.get(position).getPass() == "") {
+                    // do nothn
+                }
+                else {
+                    Intent intent = new Intent(view.getContext(), UpdateAcc.class);
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("masterKey", mainActivity.edt_txt_master_key.getText().toString());
+                    bundle.putSerializable("card", cards.get(position));
+                    intent.putExtras(bundle);
+
+                    c.startActivity(intent);
+                }
                 return true;
             }
         });
